@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edenat-nginx
+  namespace: default
+  labels:
+    app: edenat-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edenat-nginx
+  template:
+    metadata:
+      labels:
+        app: edenat-nginx
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: hw2-kubernetes
+        image: edengen/edenat_nginx:version-2
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        resources:
+            limits:
+              cpu: 16m
+              memory: 18Mi
+            requests:
+              cpu: 16m
+              memory: 18Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edenat-nginx
+  labels:
+    app: edenat-nginx
+spec:
+  type: NodePort
+  ports:
+    - port: 30555
+      targetPort: http
+      nodePort: 30555
+      protocol: TCP
+  selector:
+    app: edenat-nginx
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations: {}
+  name: edenat-nginx
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: edenat-nginx
+  minReplicas: 1
+  maxReplicas: 100
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 10
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 10
