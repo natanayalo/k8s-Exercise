@@ -15,3 +15,13 @@ and HorizontalPodAutoscaler, as following:
   f. Performing a rollback to the previous version. Once the rollback is done, query the HTTP server again (once). Print the output.
   g. Delete the Service, Deployment and HorizontalPodAutoscaler.
   h. Print “Great Success!”.
+
+**2 Docker images** based on nginx, that listens on port 80 and returns “Server address: <IP:PORT>”.
+In addition to this, the server also return the IDs of the students and the version of the image, in the following format:
+Server address: 10.1.2.3:80
+Student IDs: 123456789_987654321
+Server version: version-1
+And aversion 2 of the Docker image that will return:
+Server address: 10.1.2.3:80
+Student IDs: 123456789_987654321
+Server version: version-2
