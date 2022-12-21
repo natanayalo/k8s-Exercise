@@ -20,7 +20,7 @@ In addition to this, the server also return the IDs of the students and the vers
 Server address: 10.1.2.3:80.
 Student IDs: 123456789_987654321.
 Server version: version-1.
-And aversion 2 of the Docker image that will return:
+And a version 2 of the Docker image that will return:
 Server address: 10.1.2.3:80.
 Student IDs: 123456789_987654321.
 Server version: version-2.
